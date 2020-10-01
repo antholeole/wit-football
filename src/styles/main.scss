@@ -1,0 +1,126 @@
+@import './vars.scss';
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300&family=Syne:wght@600&display=swap');
+
+@import './loaders/three-dots'; //The three dots package on NPM. Using for loader
+
+body {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    font-family: 'Nunito Sans', sans-serif;
+
+    background-color: $main-color;
+}
+
+#root {
+    height: 100%;
+
+    .App {
+        margin: auto;
+        width: 90vw;
+        max-width: 900px;
+        height: 100%;
+        background-color: $background-color;
+
+        @media (max-width: $breakpoint-small) {
+            width: 100%;
+            margin: 0;
+        }
+    }
+}
+
+.logo {
+    &__text {
+        margin-top: 0;
+        padding-top: 15px;
+        text-align: center;
+        font-family: 'Syne', sans-serif;
+    }
+
+    &__img {
+        margin: auto;
+        display: block;
+    }
+}
+
+.query {
+    text-align: center;
+
+    &__error {
+        background-color: rgb(255, 177, 177);
+        border-radius: 10px;
+        color: rgb(121, 0, 0);
+        margin: auto;
+        border: 1px solid red;
+        width: 50%;
+    }
+
+    &__loader {
+        margin: auto;
+        display: block;
+
+
+        &__loader {
+            width: 1px;
+            margin: auto;
+            display: block;
+        }
+    }
+}
+
+.search {
+    padding: 20px;
+
+    &__search_container {
+        margin: auto;
+        padding: 10px;
+        overflow: visible;
+        width: 50%;
+        min-width: 200px;
+
+        &__search_button {
+            width: 100%;
+            background-color: $accent-color;
+            padding: 5px;
+            margin-top: 10px;
+            border-radius: 5px;
+            outline: none;
+            border: 0;
+            text-align: center;
+            vertical-align: middle;
+            color: white;
+            font-size: large;
+            font-family: 'Nunito Sans', sans-serif;
+
+        }
+
+        &__search_box {
+            box-sizing: border-box;
+            overflow-wrap: break-word;
+            width: 100%;
+            border: 3px solid $accent-color;
+            padding: 5px;
+            border-radius: 5px;
+            outline: none;
+            color: #9DBFAF;
+            font-size: 1.3rem;
+            resize: none;
+            font-family: 'Nunito Sans', sans-serif;
+
+            &:focus {
+                color: $accent-color;
+            }
+        }
+    }
+}
+
+.correct {
+    color: lightgreen;
+}
+
+.incorrect {
+    color: red;
+}
