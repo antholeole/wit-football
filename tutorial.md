@@ -1,6 +1,6 @@
 # Beginner Tutorial: Create a Football Info Hub With Natural Language Queries Using React and Wit.ai
 
-This tutorial will show you how to use wit.ai to add incredible natural language processing to your project. We're going to allow a user to write google-like queries about football (soccer) and get the answer!
+This tutorial will show you how to use wit.ai to add incredible natural language processing to your project. We're going to allow a user to write plain English queries about football (soccer) and get the answer!
 
 ## What is wit.ai, and why should we use it?
 
@@ -8,9 +8,9 @@ For humans like me and you, we can make sentences like:
 
 > 1. How many players are on the New England Revolution?
 > 2. What is the count of players on the New England Revolution?
-> 3. On the New England Revolution, how many players are there?
+> 3. On the Revs, how many players are there?
 
-And know that the *intent* of the question is return the value of: `teams["New England Revolution"].players.length.` For a program, though, parsing that query that would be pretty hard. Sure, we can take that sentence and check if it contains the string "New England Revolution," but how will we know that we're asking for the player count? If we check for `sentence.includes('count'),` then the third or first wouldn't process correctly. If we do `sentence.includes('count') || sentence.includes('how many'),` then a query like "How many goals does Manchester United score on average per game?" would give you the player count. 
+And know that the goal of the question is to get the player count for the New England Revolutions. For a program, though, parsing that query that would be pretty hard. Sure, we can take that sentence and check if it contains the string "New England Revolution," but how will we know that we're asking for the player count? If we check for `sentence.includes('count'),` then the third or first wouldn't process correctly. If we do `sentence.includes('count') || sentence.includes('how many'),` then a query like "How many goals does Manchester United score on average per game?" would give you the player count. 
 
 > You could get more and more specific with your `sentence.includes()` statements, but even a novice
 > programmer can tell that we can very quickly get messy, branching code.
@@ -36,7 +36,7 @@ Instead, we can just have wit.ai parse that request and put it in a format that 
 
 ```
 
-In this way, all three of the questions would return the New England Revolution's player count. It would be possible to run `teams[json.entities["teams:teams"][0].name][json.intents[0].name]` and get the player count, regardless of the team or the exact language used.
+In this way, all three of the questions would return the New England Revolution's player count. It would be possible to run something like `teams[json.entities["teams:teams"][0].name][json.intents[0].name]` and get the player count, regardless of the team or the exact language used.
 
 ## What will this tutorial go over?
 
@@ -60,7 +60,7 @@ I'm going to assume that you are:
 
 - A intermediate programmer. I'll expect you to know basic programming techniques, like flow control, functions, and variables.
 
-- have node installed on your computer
+- have [node](https://nodejs.org/en/download/) installed on your computer
 
 - you do NOT need to know any React. I already built a whole React app for you. All you have to do is `git pull` it :) 
 
@@ -69,18 +69,20 @@ I'm going to assume that you are:
 I've already created somewhat of a scaffold for you, so we can quickly start coding. All you have to do is pull the project by running the following commands in the terminal.
 
 ```
-TODO INSERT COMMAND HERE
+git clone https://github.com/antholeole/wit-football-boiler.git
 ```
 
-and then run 
+
+then change directory into the one you just created.
+
 
 ```
-npm start
+npm i && npm start
 ```
 
 And the project should be open.
 
-TODO INSERT IMAGE ONE HERE
+![Project image](https://user-images.githubusercontent.com/48811365/95699849-27647280-0c0b-11eb-97fe-03d79dd4c906.png)
 
 I've already covered a lot of the basics of setting up the project for you.
 
@@ -89,19 +91,25 @@ I've already covered a lot of the basics of setting up the project for you.
 
 - I've set up a **typescript** React environment. This includes [eslint](https://eslint.org/) and some libraries to help us move a bit faster.
 
-> If you're not familiar with Typescript (TS), it might be comforting to hear that it's just a flavor of Javascript (JS). Programmers like when things are boring, and TS is only JS in a more strict environment, so we can write some more predictable code. I'll give some examples further in the tutorial of why I prefer TS over JS. If you've used a statically typed programming language before, TS is super easy to learn.
+> If you're not familiar with Typescript (TS), it might be comforting to hear that it's just a flavor of Javascript (JS). Programmers like when things are boring, and TS is just JS in a more strict environment, so we can write some more predictable code. I'll give some examples further in the tutorial of why I prefer TS over JS. If you've used a statically typed programming language before, TS is super easy to learn.
 
-You'll see that when you enter a question in the box, nothing will happen! That's because we're not hooked up to the wit.ai API yet, so let's get that started. Head over to [wit.ai](wit.ai) and log in with your Facebook account. You'll be greeted with a friendly-looking UI.
+You'll see that when you enter a question in the box, you'll get an error!
 
-TODO INSERT IMAGE OF WIT.AI
+ That's because we're not hooked up to the wit.ai API yet, so let's get that started. Head over to [wit.ai](wit.ai) and log in with your Facebook account. You'll be greeted with a friendly-looking UI.
 
-Click on the "New App" button in the corner to get the new app started. Name it whatever you want, and make sure to selecEnglishish language" if you're going to follow this tutorial.
+![wit_inital](https://user-images.githubusercontent.com/48811365/95699962-6c88a480-0c0b-11eb-9aa9-3f504cefeefc.png)
 
-After you're done with that modal, you'll be greeted with a page with a lot of words you probably don't understand yet :) Don't worry, I'll be going through every aspect of wit.ai - you'll quickly become a Wit pro.
+Click on the "New App" button in the corner to get the new app started. Name it whatever you want, and make sure to select "English language" if you're going to follow this tutorial.
 
-TODO INSERT IMAGE OF WIT PROJECT
+After you're done with that modal, you'll be greeted with a page with a lot of words you probably don't understand yet :) Don't worry, I'll be going through almost every aspect of wit.ai - you'll quickly become a Wit pro.
+
+![wit_in_app](https://user-images.githubusercontent.com/48811365/95699977-7b6f5700-0c0b-11eb-9f73-a5dd9b4a6b98.png)
 
 First, on the left side of your screen, under the **Management** tab, click on the "*settings*" link. There, you'll see your app ID and a bunch of other information. What we're after is the Access Token - specifically, the Client Access Token. Click "Generate new token" next to Client Access Token.
+
+![Screen Shot 2020-10-11 at 9 49 06 PM](https://user-images.githubusercontent.com/48811365/95700093-c9845a80-0c0b-11eb-872d-8766e0771210.png)
+
+I left the client token to my project in here, but you should put yours in if you want to access *your* entities, traits and intents.
 
 > An access token authenticates us into the project, allowing us to call the API. A third party should **never** get ahold of your server access token. This will enable them to perform many breaking changes to your project, like edit your intents, entities, and traits. A client access token only has *read* rights, so it's safe to give it straight to a client. 
 
@@ -113,9 +121,13 @@ In `src/constants/api_keys.ts,` paste your key into the `WIT_CLIENT_API_KEY` var
 
 The first part of wit.ai that we'll explore will be the Intents. Think of an **intent** as "the reason you're making the request." For instance, in the earlier example of "how many players are on the team?" The "reason" would be to get the player count. That's what we'll call our intent: "Player Count"! 
 
-Under the same "management" dropdown, click on the "Intent" link. Then, click on the blue "Add intent" in the top right corner. Name the intent "Player Count." You'll see that not much happened, but when you click on the "intents" link under the management dropdown again, you'll see our new intent!
+Under the same "management" dropdown, click on the "Intent" link. Then, click on "Add intent" in the top right corner. Name the intent "Player Count." You'll see that not much happened, but when you click on the "intents" link under the management dropdown again, you'll see our new intent!
+
+![add_pc_intent](https://user-images.githubusercontent.com/48811365/95700104-d43eef80-0c0b-11eb-8ba0-f21e4be91812.gif)
 
 Head over to the "understanding" tab above the management tab. In the utterances box, type "How many players are there on the New England Revolution?" and then right below that, select the intent we just created from the dropdown. Click "train and validate" down below. 
+
+![First utterance](https://user-images.githubusercontent.com/48811365/95700135-e751bf80-0c0b-11eb-979c-f16b6130590c.png)
 
 While we wait for our training to complete, let's talk a little bit about what we just did.
 
@@ -125,7 +137,7 @@ Go back to the utterance box and type "How many people are on the soccer team?".
 
 Another question we'll answer with our app is, "When did the MLS start in (YEAR)?". Head over to intents and add the "League Start" intent. 
 
-TODO INSERT GIF OF LEAGUE START INTENT
+![League Start](https://user-images.githubusercontent.com/48811365/95700196-04868e00-0c0c-11eb-9533-f0d9fe672c3d.png)
 
 Now go back to utterances. Type "When did the MLS start in 2018?" You'll see that Wit incorrectly guesses the intent, so we can change that guess. Change it to "League Start" and train it.
 
@@ -135,19 +147,19 @@ Now go back to utterances. Type "When did the MLS start in 2018?" You'll see tha
 
 Okay, so we know that intents are the "reason" for making the request, but what about the subject? That's where the entities come in. Think of an entity as an object. In this case, it'll be soccer teams. 
 
-The same way we created entities create a new "Team" Entity. You'll see that it asks you if you want it to be free text, keyword, or both. 
-
-TODO INSERT IMAGE HERE
+click on the "entity" tab and create one the same way we created entities create a new "Team" Entity. You'll see that it asks you if you want it to be free text, keyword, or both. 
 
 If you choose "free text," Wit will try to infer the entity, just like it did with the intent. If you select "keyword," Wit will essentially do a `.includes(ENTITY),` but can infer through typos and other small changes. In our case, we'll do keyword, but keyword & free text can work pretty well here too.
 
-After you create the entity, in the "keyword and synonyms" section, add a new keyword named "New England Revolution." That's pretty wordy, though, and I like to call them the Revs - so let's add a synonym to the entity and name it "Revs." Now, Wit will look for "Rev" or "New England Revolution." If
+After you create the entity, in the "keyword and synonyms" section, add a new keyword named "New England Revolution." That's pretty wordy, though, and I like to call them the Revs - so let's add a synonym to the entity and name it "Revs." Now, Wit will look for "Rev" or "New England Revolution."
 
-> If you decide you want to extend the app into more teams, just add the team name into the "Keyword" part just like we just did. Do this for every team you want to add.
+> If you decide you want to extend the app into more teams, just add the team name into the "Keyword" part just like we just did. Do this for every team you want to add. (and make sure you have / can obtain the data from the team!)
 
 > If you go back in the utterances tab and type a sentence that includes the word "Rev," Wit will pick it up and show you that the entity is the Revs. Pretty cool, right? 
 
-We also want to add one more entity: the wit/datetime entity. This is so that when we want 2008, we'll have Wit tell us that we mean 2008, even if we type "08". Next, click "+ Entity", and instead of typing in an entity name, click on the "add built-in entity" checkbox and type "datetime." 
+We also want to add one more entity: the wit/datetime entity. This is so that when we want 2008, we'll have Wit tell us that we mean 2008, even if we type "08". Next, click "+ Entity", and instead of typing in an entity name, click on the "add built-in entity" checkbox and type "datetime."
+
+![datetime_entity](https://user-images.githubusercontent.com/48811365/95700236-1e27d580-0c0c-11eb-8d3b-034f12ce03c5.gif)
 
 The last one we're going to want is the number entity. This is so that we can parse the "guess" out of the request. Go ahead and add that entity the same exact way we added the datetime entity.
 
@@ -157,35 +169,55 @@ The last one we're going to want is the number entity. This is so that we can pa
 
 Wit.ai provides us with an extensive library of pre-provided entities and traits. For this tutorial, we'll only be using the datetime entity. Still, I encourage you to look through them - it really is an extensive (and well trained!) library. 
 
+![all_entities](https://user-images.githubusercontent.com/48811365/95700266-313aa580-0c0c-11eb-8c3a-b2b80b61b1da.gif)
+
 ### Traits
 
 Finally, we have "traits." Traits are something that can't accurately be described in one word, but if I had to pick one, it'd be "Traits" :). 
 
 Traits are "hidden messages" in text. It's not the reason or the subject, but it sure is in the utterance. These are generally easy for humans to pick up on, but incredibly difficult for robots. The pre-trained library of traits will be pretty helpful for understanding them. 
 
-One functionality we'll be including in the app is a "Fact checker." Maybe I type "There were 15 players on the Revs in 2018". That's incorrect, so we want our app to say "WRONG! there are TODO: INSERT NUMBER," but we don't want to yell "WRONG!" at people who are just asking questions! So we'll create a trait called "sentence type."  
+One functionality we'll be including in the app is a "Fact checker." Maybe I type "There were 15 players on the Revs in 2018". That's incorrect, so we want our app to say "WRONG! there are 28," but we don't want to yell "WRONG!" at people who are just asking questions! We need a way to differentiate sentences from questions. The existence of a question mark is not "proof" enough, because users generally don't input question marks into google. 
 
 > *NOTE*: We'll only tell the user if they're guess was right or wrong for the player count intent. 
 
-When you create the trait, in the "values" section, type in "statement" and "question." We need to train the model here - as I said, this is pretty hard for a computer to understand. Click on "utterances" once again.
+Create a trait and name it "Sentence Type". in the "values" section, type in "statement" and "question." When wit.ai tries to assign the trait, it will choose from the list of values and select which one fit best. In this case, Wit will check between "question" and "statement". 
 
-> Don't feel like you can't repeat yourself - try to vary your lines when training, but there's no penalty if you repeat yourself. Make sure to spend some time here training the traits model!
+> Make sure to train the model, and don't feel like you can't repeat yourself - try to vary your lines when training, but there's no penalty if you repeat yourself. Make sure to spend some time here training this trait!
 
-The list of sentences from prior should all return the same exact set of attributes: `Question` trait, `rev` entity, `player count` intent. It's much easier to parse that then the sentence itself. So let's parse it!  
+Now that we're done with all the Wit entities, traits and intents, The list of sentences from the beginning of this tutorial should all return the same exact set of attributes: `Question` trait, `rev` entity, `player count` intent. It's much easier to parse that then the sentence itself. So let's parse it!  
 
 ## Back to the Football Wit
 
 When you submit a request through the app, the function called is `callWitApi` in `services/wit/api_call.ts.` I already wrote this function for you - woohoo! 
 
-INSERT FUNCTION API CALL IMAGE HERE
+```
+async function callWitApi(text: string): Promise<IWitResponse> {
+    try {
+        const response = await Axios.get('https://api.wit.ai/message', {
+            params: {
+                q: text
+            },
+            headers: {
+                Authorization: `Bearer ${WIT_CLIENT_API_KEY}`
+            }
+        })
+        console.log(response)
+        return response.data
+    } catch (e) {
+        console.error(e)
+        throw Error(Errors.apiError)
+    }
+}
+```
 
 Let's take a look at it, so we know what's going on.
 
 One of the most popular endpoints you'll be calling will be the `api.wit.ai/message?v={MESSAGE}` GET endpoint (or the POST speech endpoint, if your app is speech to text). This endpoint will provide you with the response that contains the entity, traits, and intents that we just created. Let's try it out.
 
 ```
-$ curl -XGET 'https://api.wit.ai/message?v=20200513&q=how%20many%20players%20are%20on%20the%20revs&20in%202008' \
--H "Authorization: Bearer $TOKEN"
+curl --location --request GET 'api.wit.ai/message?q=How%20many%20players%20are%20on%20the%20revs%20in%202008?' \
+--header 'Authorization: Bearer $TOKEN'
 ```
 
 Where `$TOKEN` is our client API key.  You should get a response like this: 
@@ -250,11 +282,12 @@ Where `$TOKEN` is our client API key.  You should get a response like this:
 }
 ```
 
+> If your response looked different (missing entities, etc.) then you might want to go back and train your app some more.
+ 
 All `callWitApi` does is call the wit API and return that response. That response gets passed to `parseWitCall.ts` in `services/wit/parse.ts.` That's the function that we'll write!
 
 > If you named your entities, traits, or intents something different, make sure to update the interface in `service/wit/i_wit_response.ts` so that the interface complies with the response you got from the curl command above.
 
-While we only have one team and two intents, we'll be using an easily extensible pattern to make it easier in the future to extend this app. 
 
 First, let's write an easy one: Figure out if it's a question, or a sentence! If you remember, this is through the *trait* we added. Below parseWitCall, let's write a function with the signature `determineRequestType(IWitResponse): InputType`. In the method body, let's `switch` on the first trait's value. That value will either be "question" or "statement", and we'll return `InputType.question` or `InputType.statement` respectively. Let's not forget to add a default branch: We'll return "Question" as the default if wit doesn't determine a sentence type. Our final `determineRequestType` function should look like this:
 
@@ -272,8 +305,6 @@ function determineRequestType(response: IWitResponse): InputType {
 }
 ```
 
-The only way to get an error here is if we don't get a trait, so we should add a null aware to the `.Sentence_Type.` Now, we switch on `switch (response.traits?.Sentence_Type[0]?.value)` so that if we don't have a Sentence_Type, we'll default to the default branch.
-
 So that's it! That's all it took, and now that function is complete. The rest of the parsing is a little different, but the same. We'll save that into a variable in the `parseWitCall` function.
 
 For our example, we don't need to parse the team out of the entity because we only have the Revs data. If we needed to do that, here's what the code for that could have looked like:
@@ -285,9 +316,7 @@ switch (response.entities?.["Team:Team"][0]?.name) {
 }
 ```
 
-> A bad programming practice is called "stringly typed." That means using strings excessively to compare values. That's not good because if a string gets mutated, all your equality checks down the line will fail, which is why we return an enum with a fixed value.
-
-The other entity to parse is the datetime entity. Datetime is sent in ISO format, which is thankfully very easy to parse in TS/JS. Let's write a function that takes the response and returns the year. If the year is out of our data range, we should throw an error instead of giving the user the wrong data. If the user doesn't specify the year, we should just return the latest data.
+The other entity to parse is the datetime entity. Wit sends datetime is sent in ISO format, which is easy to parse in TS/JS. Let's write a function that takes the response and returns the year. If the year is out of our data range, we should throw an error instead of giving the user the wrong data. If the user doesn't specify the year, we should just return the latest data, being 2018.
 
 ```
 function getYear(response: IWitResponse): number {
@@ -360,12 +389,12 @@ function parseWitCall(response: IWitResponse): IParsedWitResponse {
         throw Error(Errors.badRequestError)
     }
 
-    let requestType = determineRequestType(response)
+    const requestType = determineRequestType(response)
     let guess: string | undefined
     let actual: string
 
     if (response.intents[0].name === "Player_Count") {
-        if (requestType === InputType.question) {
+        if (requestType === InputType.statement) {
             guess = getPlayerCountGuess(response)?.toString()
         }
         actual = getPlayerCount(getYear(response)).toString()
@@ -378,6 +407,7 @@ function parseWitCall(response: IWitResponse): IParsedWitResponse {
         correct: guess !== undefined && guess === actual,
         value: actual
     }
+}
 ```
 
 The first thing we do is check if we have an intent. If we don't, there's nothing we can do; we don't know what or how to answer! So we just throw an error.
@@ -386,8 +416,7 @@ You see that we set up the variables we're returning before hand, and then fill 
 
 And that's it! We're done. If you re-run the application, you'll see it working as intended. If the translation is off sometimes, all you need to do is go to the understanding pane in wit.ai and train the model some more.
 
-TODO INSERT COMPLETED SCREENSHOT
-
+![final](https://user-images.githubusercontent.com/48811365/95700291-4c0d1a00-0c0c-11eb-8cce-3e2a98db3b47.png)
 # Conclusion
 
 Our "parse" code file is less than 100 lines of code, and we were able to extract all of this from a sentence:
