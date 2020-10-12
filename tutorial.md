@@ -64,7 +64,7 @@ I'm going to assume that you are:
 
 - you do NOT need to know any React. I already built a whole React app for you. All you have to do is `git pull` it :) 
 
-## Step 1: Running the project initially
+# Step 1: Running the project initially
 
 I've already created somewhat of a scaffold for you, so we can quickly start coding. All you have to do is pull the project by running the following commands in the terminal.
 
@@ -115,9 +115,9 @@ I left the client token to my project in here, but you should put yours in if yo
 
 In `src/constants/api_keys.ts,` paste your key into the `WIT_CLIENT_API_KEY` variable.
 
-## using Wit.ai
+# Step 2: using Wit.ai
 
-### Intents
+## Intents
 
 The first part of wit.ai that we'll explore will be the Intents. Think of an **intent** as "the reason you're making the request." For instance, in the earlier example of "how many players are on the team?" The "reason" would be to get the player count. That's what we'll call our intent: "Player Count"! 
 
@@ -143,7 +143,7 @@ Now go back to utterances. Type "When did the MLS start in 2018?" You'll see tha
 
 > Usually, we want to train the AI until it gets pretty good at guessing the intent. You should take four or five minutes to type in as many ways you can think of asking those questions, and training the AI a little bit. You'll see that pretty quickly, Wit gets freaky good at guessing the intent.
 
-### Entities
+## Entities
 
 Okay, so we know that intents are the "reason" for making the request, but what about the subject? That's where the entities come in. Think of an entity as an object. In this case, it'll be soccer teams. 
 
@@ -187,7 +187,7 @@ Create a trait and name it "Sentence Type". in the "values" section, type in "st
 
 Now that we're done with all the Wit entities, traits and intents, The list of sentences from the beginning of this tutorial should all return the same exact set of attributes: `Question` trait, `rev` entity, `player count` intent. It's much easier to parse that then the sentence itself. So let's parse it!  
 
-## Back to the Football Wit
+# Step 3: Back to the Football Wit
 
 When you submit a request through the app, the function called is `callWitApi` in `services/wit/api_call.ts.` I already wrote this function for you - woohoo! 
 
