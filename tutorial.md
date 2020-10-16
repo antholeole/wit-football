@@ -52,9 +52,9 @@ In this way, all three of the questions would return the New England Revolution'
 
 After you're done with this tutorial, we'll have used the power of wit.ai to translate human texts into statements computers understand. Here are the scenario's we'll cover:
 
-1. How many players are on <team>? (Respond with the player count of <team>)
+1. How many players are on TEAM? (Respond with the player count of TEAM)
 2. When did the 2018 season start? (Respond with the start date of the 2018 season)
-3. There were 15 players on <team> in 2018. (Respond with TRUE or FALSE and real player count if false)
+3. There were 15 players on TEAM in 2018. (Respond with TRUE or FALSE and real player count if false)
 
 We'll only be loading in data from one team (The New England Revolutions!), but the data is straight from [API-Football](https://www.api-football.com/), so feel free to extend the app to accept more teams!
 
