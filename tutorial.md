@@ -2,7 +2,7 @@
 
 This tutorial will show you how to use wit.ai to add incredible natural language processing to your project. We're going to allow a user to write plain English queries about football (soccer) and get the answer!
 
-If you're in a rush, [here's](https://youtu.be/quuNoqQsphY) a two minute overview of wit.ai and everything you need to know about it.
+If you're in a rush, [here's](https://youtu.be/quuNoqQsphY) a two-minute overview of wit.ai and everything you need to know about it.
 
 Here's what we'll be building:
 
