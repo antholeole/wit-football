@@ -2,7 +2,9 @@ This application was created using CREATE REACT APP, by Facebook.
 
 This application is protected under the MIT license, provided at the bottom of this file.
 
-To boot the application up, make sure to have NPM installed. Then, run `npm i && npm run start`. This is the COMPLETED version of the project, with all code already in place. The tutorial version can be found at `tutorial.md`.
+To boot the application up, make sure to have NPM installed. Then, run `npm i && npm run start`. This is the COMPLETED version of the project, with all code already in place. 
+
+The tutorial can be found in `tutorial.md` at the root of this project.
 
 Copyright 2020 Anthony Oleinik
 
