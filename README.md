@@ -4,7 +4,7 @@ This application is protected under the MIT license, provided at the bottom of t
 
 To boot the application up, make sure to have NPM installed. Then, run `npm i && npm run start`. This is the COMPLETED version of the project, with all code already in place. 
 
-The tutorial can be found in `tutorial.md` at the root of this project.
+The tutorial can be found in `tutorial.md` at the root of this project. The tutorial will walk you through how to pull the template version of the project.
 
 Copyright 2020 Anthony Oleinik
 
