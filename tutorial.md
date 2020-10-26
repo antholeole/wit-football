@@ -15,6 +15,7 @@ For humans like me and you, we can make sentences like:
 > 1. How many players are on the New England Revolution?
 > 2. What is the count of players on the New England Revolution?
 > 3. On the Revs, how many players are there?
+
 And know that the goal of the question is to get the player count for the New England Revolutions. For a program, though, parsing that query that would be pretty hard. Sure, we can take that sentence and check if it contains the string "New England Revolution," but how will we know that we're asking for the player count? If we check for `sentence.includes('count'),` then the third or first wouldn't process correctly. If we do `sentence.includes('count') || sentence.includes('how many'),` then a query like "How many goals does Manchester United score on average per game?" would give you the player count. 
 
 > You could get more and more specific with your `sentence.includes()` statements, but even a novice
@@ -436,3 +437,13 @@ Our "parse" code file is less than 100 lines of code, and we were able to extrac
 And we do it all safely! In case of an error or lack of info, we default correctly or throw errors when we can't recover. Wit.ai allowed us to create a safe, extensible application without worrying about every single way a human can ask something. 
 
 Wit.ai is a powerful tool that allows us to use natural language processing to enable the user to "talk" to a computer, without worrying too much about their syntax. This helps provide a fluid user experience that doesn't feel like you're inputting commands into a machine.
+
+Wit.ai creates a fluid user experience, making it easy to use your app. {eople can enter text without needing to conform to a strict sentence structure.
+ 
+## Where to do from here?
+
+If you'd like to extend this app, I recommend calling the football API directly instead of using fixtures. Some ideas to continue practicing wit.ai with this app:
+- add more questions (intents)
+- add more teams (entites)
+- Use wit.ai's `/speech` endpoint to do speech to text.
+- call the football API directly so that your data is dynamic!
