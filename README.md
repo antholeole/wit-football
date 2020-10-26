@@ -15,6 +15,7 @@ For humans like me and you, we can make sentences like:
 > 1. How many players are on the New England Revolution?
 > 2. What is the count of players on the New England Revolution?
 > 3. On the Revs, how many players are there?
+
 And know that the goal of the question is to get the player count for the New England Revolutions. For a program, though, parsing that query that would be pretty hard. Sure, we can take that sentence and check if it contains the string "New England Revolution," but how will we know that we're asking for the player count? If we check for `sentence.includes('count'),` then the third or first wouldn't process correctly. If we do `sentence.includes('count') || sentence.includes('how many'),` then a query like "How many goals does Manchester United score on average per game?" would give you the player count. 
 
 > You could get more and more specific with your `sentence.includes()` statements, but even a novice
@@ -65,7 +66,7 @@ I'm going to assume that you are:
 
 - A intermediate programmer. I'll expect you to know basic programming techniques, like flow control, functions, and variables.
 
-- have [node](https://nodejs.org/en/download/) installed on your computer
+- have [node](https://nodejs.org/en/download/) installed on your computer.
 
 - you do NOT need to know any React. I already built a whole React app for you. All you have to do is `git pull` it :) 
 
